@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580888521224.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "199975421",
+    "id" : "87702ED6",
+    "lastKnownWriteTime" : 1580949108,
+    "last_content_update" : 1580949108737,
+    "path" : "C:/Users/kjjs1/ProjectFileKim/Rwork/StatProject/5_Corelation.R",
+    "project_path" : "5_Corelation.R",
+    "properties" : {
+        "cursorPosition" : "15,31",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 14,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

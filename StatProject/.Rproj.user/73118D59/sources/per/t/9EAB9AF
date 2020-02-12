@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580872138303.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "747544629",
+    "id" : "9EAB9AF",
+    "lastKnownWriteTime" : 1580872169,
+    "last_content_update" : 1580872169774,
+    "path" : "C:/Users/kjjs1/ProjectFileKim/Rwork/StatProject/friedmen_hoc.R",
+    "project_path" : "friedmen_hoc.R",
+    "properties" : {
+        "cursorPosition" : "123,5",
+        "scrollLine" : "123",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 10,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

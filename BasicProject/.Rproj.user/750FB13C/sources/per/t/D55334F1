@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1581173210854.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2502433188",
+    "id" : "D55334F1",
+    "lastKnownWriteTime" : 1580434366,
+    "last_content_update" : 1580434366,
+    "path" : "~/ProjectFileKim/Rwork/BasicProject/4_Data분석_R.R",
+    "project_path" : "4_Data분석_R.R",
+    "properties" : {
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1581399693071.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1950588342",
+    "id" : "FC794B61",
+    "lastKnownWriteTime" : 1581494092,
+    "last_content_update" : 1581494092422,
+    "path" : "~/ProjectFileKim/Rwork/StatProject/3_ANOVA.R",
+    "project_path" : "3_ANOVA.R",
+    "properties" : {
+        "cursorPosition" : "35,0",
+        "scrollLine" : "24"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

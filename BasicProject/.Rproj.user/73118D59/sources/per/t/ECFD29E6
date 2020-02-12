@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580705916766.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "233381511",
+    "id" : "ECFD29E6",
+    "lastKnownWriteTime" : 1580780773,
+    "last_content_update" : 1580780773764,
+    "path" : "C:/Users/kjjs1/ProjectFileKim/Rwork/BasicProject/test_1_R.R",
+    "project_path" : "test_1_R.R",
+    "properties" : {
+        "cursorPosition" : "61,120",
+        "scrollLine" : "39",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

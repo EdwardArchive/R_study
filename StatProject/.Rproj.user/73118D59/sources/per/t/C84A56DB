@@ -1,0 +1,33 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580866492842.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "C84A56DB",
+    "lastKnownWriteTime" : 1575577004096,
+    "last_content_update" : 1580866492842,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "42345A1",
+        "caption" : "InsectSprays",
+        "contentUrl" : "grid_resource/gridviewer.html?env=package%3Adatasets&obj=InsectSprays&cache_key=42345A1",
+        "displayedObservations" : 72,
+        "environment" : "package:datasets",
+        "expression" : "InsectSprays",
+        "object" : "InsectSprays",
+        "preview" : 0,
+        "totalObservations" : 72,
+        "variables" : 2
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 9,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

@@ -1,0 +1,33 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580888647313.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "E395E94A",
+    "lastKnownWriteTime" : 2466321629402459502,
+    "last_content_update" : 1580888647313,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "65207D30",
+        "caption" : "galton",
+        "contentUrl" : "grid_resource/gridviewer.html?env=package%3AUsingR&obj=galton&cache_key=65207D30",
+        "displayedObservations" : 928,
+        "environment" : "package:UsingR",
+        "expression" : "galton",
+        "object" : "galton",
+        "preview" : 0,
+        "totalObservations" : 928,
+        "variables" : 2
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 15,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

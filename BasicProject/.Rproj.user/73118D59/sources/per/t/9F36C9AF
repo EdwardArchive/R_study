@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580270438185.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2470290377",
+    "id" : "9F36C9AF",
+    "lastKnownWriteTime" : 1580284822,
+    "last_content_update" : 1580284822468,
+    "path" : "C:/Users/kjjs1/ProjectFileKim/Rwork/BasicProject/3_ControlStatement_R.R",
+    "project_path" : "3_ControlStatement_R.R",
+    "properties" : {
+        "cursorPosition" : "231,2",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1581173209794.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2946932136",
+    "id" : "3F374187",
+    "lastKnownWriteTime" : 1580270433,
+    "last_content_update" : 1580270433,
+    "path" : "~/ProjectFileKim/Rwork/BasicProject/2_InputOutput_R.R",
+    "project_path" : "2_InputOutput_R.R",
+    "properties" : {
+        "cursorPosition" : "29,21",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

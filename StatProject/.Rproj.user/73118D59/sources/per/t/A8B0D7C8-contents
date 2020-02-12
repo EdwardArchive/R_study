@@ -1,0 +1,219 @@
+##### 단순 선형회귀 #####
+# y = wx + b
+#--------------------------
+str(women) # 미국여성 대상으로 키와 몸무게 조사(30~39세) : 인치와 파운드
+women
+
+plot(women$weight~women$height,women)
+
+fit <- lm(weight~height,women) #linear model 선을 찾아주는 함수
+# (Intercept)       height  
+# -87.52(절편)  3.45 (기울기) 
+
+
+
+summary(fit) # 좀더 많은 정보를 확인할수 있다.
+#             Estimate Std. Error t value Pr(>|t|)    
+#(Intercept) -87.51667    5.93694  -14.74 1.71e-09 ***
+#  height        3.45000    0.09114   37.85 1.09e-14 *** <- 관계가 매우 크다
+
+abline(fit,col="red")
+
+cor.test(women$weight,women$height)
+#0.9954948^2=0.9910099 == Multiple R-squared:  0.991
+
+# 다항 회귀 분석
+fit2 <- lm(weight~height + I(height^2),data = women)
+summary(fit2)
+
+plot(women$weight~women$height,women)
+lines(women$height,fitted(fit2),col="blue")
+
+# 회귀분석의 조건 충족
+par(mfrow=c(2,2))
+plot(fit)
+# 첫번쨰 그래프(Residuals vs Fitted) : 선형성을 확인하는 그래프
+# 두번쨰 그래프(Normal Q-Q) : 선형성과 정규분포
+# 세번쨰 그래프(Scale-Location) : 등분산을 이루는가를 보여주는 그래프
+# 네번쨰 그래프 : 얼마나 믿을수 있는가
+
+plot(fit2)
+
+fit3 <- lm(weight~height + I(height^2)+ I(height^3),data = women)
+summary(fit3)
+
+plot(fit3)
+
+########################################################################################################
+mydata <- read.csv("data/regression.csv")
+head(mydata)
+
+# 유치원이 많은 지역에 합게 출산율이 높은가? 합계 출산율이 유치원수에 영향을 받는가?
+
+# 종속변수
+y <- cbind(mydata$birth_rate)
+y
+
+# 독립변수
+x <- cbind(mydata$kindergarten)
+
+fit <- lm(y~x,data=mydata)
+summary(fit)
+# F F-statistic : 모형 적합도
+
+plot(fit)
+
+fit2 <- lm(log(y)~log(x),data=mydata)
+summary(fit2)
+plot(fit2)
+
+shapiro.test(resid(fit))
+shapiro.test(resid(fit2))
+
+# 시군구에 대해서 살펴보기
+
+d <- cbind(mydata$dummy)
+ 
+fit3 <- lm(y~d,data = mydata)
+summary(fit3) 
+
+plot(fit3)
+
+#######################################################################################################
+#다중 회귀 분석
+# y=w1*x1+(w2 * x2)+(w3 * x3) + ... + b
+#----------------------------------------------------------
+state.x77
+
+states <- as.data.frame(state.x77[,c("Murder","Population","Illiteracy","Income","Frost")])
+states
+
+fit <- lm(Murder ~ Population + Illiteracy + Income + Frost,states)
+#fit <- lm(Murder ~ .,states) 종속변수왜 모드것을 지정할때 . 을 사용할수 있다.
+
+summary(fit)
+
+# 다중 공선성(Multicollinearity) 
+# VIF(variation Inflacion Factor) : 분산 팽창 지수
+
+install.packages("car")
+library(car)
+str(fit)
+sqrt(vif(fit)) # 2를 넘어가면 다중 공산성에 문제가 있다
+
+### 이상치
+# 이상치(outlier) : 표준전차 2배이상 크거나 작은값
+# 큰 지레점(high leverage points) : 절편을 포함한 인수들의 숫자/n의 값이 2~3배이상 되는 관측치
+#  5(독립변수 + 절편의 갯수)/50(데이터 갯수) = 0.1
+# 영향 관측치(Cook's D) : 독립변수의 수/ 샘플수 - 독립변수의 수-1 의 값보다 큰 값 
+#  4/50-4-1(45) = 0.11 - 
+
+par(mfrow=c(1,1))
+influencePlot(fit,id=list(method="identify"))
+# 이상치 : y축
+# 큰 지레점 : 0.2~0.3
+# 영향 관측치 : 원의 크기
+
+#### 회귀모형의 교정
+## 정규분포에 대한 교정
+par(mfrow=c(2,2))
+plot(fit)
+
+powerTransform(states$Murder) #정규 분포가 아닐경우 0.6승으로 계산해보아라
+# 대부분 -2, -1, -0.5, 0. 0.5 ,1 ,2 로 넣는다
+
+summary(powerTransform(states$Murder))
+# LR test, lambda = (1) 2.122763  1 0.14512 넣어도 의미가 없다 pval >0.05
+
+##선형성에 대한 교정
+boxTidwell(Murder~Population + Illiteracy,data=states) # x변수에다가 lamda값
+
+## 등분산성에 대한 교정(등분산 만족 X 일때)
+ncvTest(fit)
+#  p = 0.18632 >0.05 필요없긴함
+# 하지만 만약에 아니라면.. : 
+spreadLevelPlot(fit)
+# Suggested power transformation:  1.209626  y 값에 1.2배를 곱해보아라
+
+## 회귀분석 모형의 선택 : Backword Regression, Forward Regression
+
+fit1 <- lm(Murder ~. ,data=states)
+summary(fit1)
+
+fit2 <- lm(Murder ~ Population + Illiteracy,data = states) #컬럼수가 적은게 오히려 성능이 좋을대가 있다.
+summary(fit2)
+
+#AIC(Akaike information criterion)
+AIC(fit1,fit2)
+
+#Backword Regrssiom, Forwrard Regreesion
+# AIC숫자를 비교하면서 가장 p.value 가 좋은곳을 인도하는데 뒤에서부터 뺴느냐 앞에서 빼느냐 다르다
+
+#backword
+full.model <- lm(Murder ~. ,data=states)
+reduced.model <- step(full.model, direction = "backward",trace= 0)
+reduced.model
+
+#forward
+min.model <- lm(Murder ~1 ,data=states)
+fwd.model <- step(min.model,direction = "forward",
+                  scope = (Murder~Population + Illiteracy + Income + Frost))
+
+# stepwise는 중간에 멈춰버리는 경향이 있음 
+# all subset regresstion(모든 컬럼을 돌리는 함수)
+install.packages("leaps")
+library(leaps)
+
+e <- regsubsets(Murder ~ Population + Illiteracy + Income + Frost,data=states,nbest = 4)
+e
+par(mfrow=c(1,1))
+plot(e,scale = "adjr2")
+
+#######################################################################################################
+### 로지스틱 회귀분석
+#######################################################################################################
+library(survival)
+library(moonBook)
+str(colon)
+?colon
+head(colon)
+#결측치 확인
+table(is.na(colon))
+colon1 <- na.omit(colon)
+
+result <- glm(status ~ rx+sex+age+obstruct+perfor+adhere+nodes+differ+extent+surg,
+    family = binomial,data = colon1)
+summary(result)
+
+#backword
+reduced.model <- step(result)
+summary(reduced.model)
+
+# oddsratio(발생 데이터 안에서) / 상대 위험도(전체 데이터 안에서)
+extractOR(reduced.model) #oddsratio
+#obstruct 는 의가 없다.
+
+#과산포 (dispersion) 입력값이 예측값보다 너무 큰 경우
+#--------------------------------
+# 과산포가 없을 때 : famliy = binomial 
+# 과산포가 있을 떄 : family = quasibinomial
+
+# 과산포 유무 확인 : pchisq()
+
+fit1 <- glm(status ~ rx + obstruct + adhere + nodes + extent + 
+      surg, family = binomial, data = colon1)
+
+fit2 <- glm(status ~ rx + obstruct + adhere + nodes + extent + 
+              surg, family = quasibinomial, data = colon1)
+
+pchisq(summary(fit2)$dispersion * fit1$df.residual,fit1$df.residual,lower=F) #dispersion 산포
+fit1$df.residual #잔차값 
+summary(fit1)
+
+# 시각화
+?ORplot()
+ORplot(fit1)
+ORplot(fit1,main="Plot for Odds Rations")
+ORplot(fit1,main="Plot for Odds Rations",type = 2,
+       show.OR = F,show.CI = T,pch=2) # type : 그림 OR : obbsration 안보이게
+

@@ -1,0 +1,33 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580803924101.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "72255006",
+    "lastKnownWriteTime" : 1575577004096,
+    "last_content_update" : 1580803924101,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "1B10F730",
+        "caption" : "acs",
+        "contentUrl" : "grid_resource/gridviewer.html?env=package%3AmoonBook&obj=acs&cache_key=1B10F730",
+        "displayedObservations" : 857,
+        "environment" : "package:moonBook",
+        "expression" : "acs",
+        "object" : "acs",
+        "preview" : 0,
+        "totalObservations" : 857,
+        "variables" : 17
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

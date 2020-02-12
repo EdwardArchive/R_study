@@ -1,0 +1,33 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580799097787.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "CB56776A",
+    "lastKnownWriteTime" : 2314885436531685431,
+    "last_content_update" : 1580799097787,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "870941DE",
+        "caption" : "sleep",
+        "contentUrl" : "grid_resource/gridviewer.html?env=package%3Adatasets&obj=sleep&cache_key=870941DE",
+        "displayedObservations" : "20",
+        "environment" : "package:datasets",
+        "expression" : "sleep",
+        "object" : "sleep",
+        "preview" : "0",
+        "totalObservations" : "20",
+        "variables" : "3"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

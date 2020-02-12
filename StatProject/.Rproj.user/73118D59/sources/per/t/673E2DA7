@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580881067348.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4257780822",
+    "id" : "673E2DA7",
+    "lastKnownWriteTime" : 1580887023,
+    "last_content_update" : 1580887023718,
+    "path" : "C:/Users/kjjs1/ProjectFileKim/Rwork/StatProject/4_ChiSquare.R",
+    "project_path" : "4_ChiSquare.R",
+    "properties" : {
+        "cursorPosition" : "56,3",
+        "scrollLine" : "50",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 11,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,340 @@
+#########################
+### 기본 내장 그래프
+#########################
+
+###plot()
+#plot(y축 데이터,옵션)
+#plot(x축 데이터, y축 데이터, 옵션)
+#---------
+plot
+
+y <- c(1,1,2,2,3,3,4,4,5,5)
+plot(y)
+
+x <- 1:10
+y <- 1:10
+plot(x,y)
+plot(x,y,xlim=c(0,20),ylim=c(0,20),main="Graph",type='o',pch=5)
+
+x=runif(100)
+y=runif(100)
+plot(x,y,pch=ifelse(y>0.5,1,10))
+
+### barplot(), hist(), mosaicplot(), pairs(), persp(), contour(), ... 책 에있는 내용 해보기
+
+### 그래프 배열
+head(mtcars)
+str(mtcars)
+
+# 그래프를 4개 그리기
+par(mfrow=c(2,2))
+plot(mtcars$mpg,mtcars$wt)
+plot(mtcars$wt,mtcars$disp)
+hist(mtcars$wt)
+boxplot(mtcars$wt)
+
+par(mfrow=c(1,1))
+plot(mtcars$wt,mtcars$mpg)
+
+# 행 또는 열마다 크래프 갯수를 다르게 설정
+#layout
+layout(matrix(c(1,1,2,3),2,2,byrow=T))
+
+plot(mtcars$mpg,mtcars$wt)
+plot(mtcars$wt,mtcars$disp)
+hist(mtcars$wt)
+boxplot(mtcars$wt)
+
+###################################################################################
+### ggplot2
+#------------
+# http://www.r-graph-gallery.com/portfolio/ggplot2-package/
+
+#데이터 지원
+#-----------
+# 1)배경 설정
+# 2)그래프 추가(점, 막대, 선, ...)
+# 3) 설정 추가(축, 범위, 범례, 식, 표식, ....)
+###################################################################################
+install.packages("ggplot2")
+library(ggplot2)
+
+# 산포도
+ggplot(data=mpg, aes(x=mpg$displ,y=mpg$hwy))
+ggplot(data=mpg, aes(x=mpg$displ,y=mpg$hwy)) + geom_point()
+ggplot(data=mpg, aes(x=mpg$displ,y=mpg$hwy)) + geom_point() + xlim(3,6)+ylim(10,30)
+
+#mpg데이터의 cty와 hwy가 어떤 관계가 있는지 알아보려고 한다.
+#x축은 cty y축은 hwy로 산포도를 만들어보시오.
+ggplot(data=mpg, aes(x=mpg$cty,y=mpg$hwy))+geom_point()
+
+# 미국 지역 연구통계를 담은 midwest데이터를 이용해 전체 인구와 아시아인 인구간에
+# 어떤 관계가 있는지 알아보려고 한다. x축은 전체인구, y축은 아시아인구로 된 산포도를 만드시오.
+# 단 전체인구는 30만명 이하, 아이아신 인구는 1만명 이하인 지역만 산정도에 표시
+
+ggplot(data=midwest, aes(x=midwest$poptotal,y=midwest$popasian))+geom_point()+
+ xlim(0,300000) +ylim(0,10000)
+
+options(scipen = 99) #지수를 춧자로 표현
+
+### 막대 그래프
+#-----------------
+
+#구동 방식별로 고속도록 펴균 연비 확인
+library(dplyr)
+
+df_mpg <- mpg %>% group_by(drv) %>% summarise(mean_hwy=mean(hwy))
+df_mpg
+
+ggplot(df_mpg,aes(drv,mean_hwy)) + geom_col()
+ggplot(mpg,aes(drv)) +geom_bar()
+ggplot(mpg,aes(hwy)) +geom_bar()
+
+# "suv"차종의 도시 연비가 높은지 알아보려고 한다.
+# "suv"차종을 대상으로 평균 cty가 가장 높은 회사 다섯 곳을 막대그래프로 표현
+mpg
+most_suv <- mpg %>% filter(class=="suv")  %>% group_by(manufacturer)  %>% summarise(total_cty=mean(cty)) %>% 
+  arrange(desc(total_cty)) %>% head(5)
+most_suv
+ggplot(most_suv,aes(reorder(manufacturer,total_cty),most_suv$total_cty)) + geom_col() #오름차순
+ggplot(most_suv,aes(reorder(manufacturer,-total_cty),most_suv$total_cty)) + geom_col() #내림차순 
+
+#자동차 중에서 어떤 종류(class)가 가장 많은지 알아보려고 한다.
+#자동차 종류별 빈도를 표현한 막대그래프를 그료보시오
+ggplot(mpg,aes(class))+geom_bar()
+
+### 선 그래프
+#------------
+head(economics)
+tail(economics)
+
+ggplot(economics,aes(date,unemploy))+geom_line()
+ggplot(economics,aes(date,psavert))+geom_line()
+
+###Box Plot
+#----------------
+ggplot(mpg,aes(drv,hwy))+geom_boxplot()
+
+# class가 "compact","subcompact","suv"인 자동차의 cty가 어떻게 다른지 비교해보려고 한다.
+# 세 차종의 cty를 나타낸 상자그림을 그려보시오.
+class_mpg <- mpg %>% filter(class %in% c("compact","suv","subcompact"))
+ggplot(class_mpg, aes(class,cty))+geom_boxplot()
+
+#######################################################################################
+# 기본 그래프 중에서 특이한 기능
+#######################################################################################
+
+### arrows
+#-----------
+x <- c(1,3,6,8,9)
+y <- c(12,56,78,32,9)
+plot(x,y)
+arrows(3,56,1,12) #화살표 (시작위치,끝위치)
+text(4,40,"이것은 샘플입니다.",srt=55) # srt :글자의 각도
+
+### 꽃잎 그래프 (해바라기 그래프)
+x <- c(1,1,1,2,2,2,2,2,2,3,3,4,5,6,6,6)
+y <- c(2,1,4,2,3,2,2,2,2,2,1,1,1,1,1,1)
+plot(x,y)
+
+c<- data.frame(x,y)
+sunflowerplot(c)
+
+### 별 그래프
+# 데이터의 전체적인 윤곽을 살펴보는 그래프
+# 데이터 항목에 대한 변화의 정도를 하눈에 파악
+#---------------------------------------------
+head(mtcars)
+
+stars(mtcars[1:4])
+stars(mtcars[1:4],flip.labels = F)
+stars(mtcars[1:4],flip.labels = F,key.loc = c(13,1,5))
+stars(mtcars[1:4],flip.labels = F,key.loc = c(13,1,5),draw.segments = T) #나이팅게일 차트 
+
+###symbols()
+#------------
+x<-c(1,2,3,4,5)
+y<-c(2,3,4,5,6)
+z<-c(10,50,100,20,10)
+
+symbols(x,y,z)
+
+#############################################################################################
+# Special Graph
+#############################################################################################
+
+### 인터렉티브 그래프
+# http://plot.ly/ggplot2
+#-------------------------
+install.packages("plotly")
+library(plotly)
+p<- ggplot(mpg, aes(displ,hwy))+geom_point()
+ggplotly(p)
+
+p<- ggplot(mpg, aes(displ,hwy))+geom_bar(position = "dodge")
+p
+ggplotly(p)
+
+#dygraphs 패키지를 이용한 익터렉티브 시계열 그래프 그리기
+install.packages("dygraphs")
+library(dygraphs)
+library(xts)
+
+head(economics)
+
+ecu <- xts(economics$unemploy, order.by = economics$date)
+ecu
+class(ecu)
+
+dygraph(ecu)
+
+dygraph(ecu) %>% dyRangeSelector()
+
+#여러 값을 동시에 표현
+ecu_a <- xts(economics$psavert,order.by = economics$date)
+ecu_b <- xts(economics$unemploy/1000,order.by = economics$date)
+
+eco2 <- cbind(ecu_a,ecu_b)
+head(eco2)
+colnames(eco2)<-c("psavert","unemploy")
+
+dygraph(eco2)
+
+### 지도 그래프(단계 구분도 Choropleth map)
+#--------------------------------------------
+install.packages("ggiraphExtra")
+install.packages("maps")
+library(ggiraphExtra)
+
+head(USArrests)
+str(USArrests)
+
+library(tibble)
+crime <- rownames_to_column(USArrests, var="state")
+head(crime)
+str(crime)
+
+crime$state <- tolower(crime$state)
+head(crime)
+
+states_map <- map_data("state")
+head(states_map)
+str(states_map)
+
+install.packages("mapproj")
+
+#url <- "https://cran.r-project.org/bin/windows/contrib/3.5/mapproj_1.2.6.zip"
+#install.packages(url,repos = NULL, type = "source") 안될경우 시도해 볼수 있음
+ggChoropleth(data=crime, aes(fill=Murder,map_id=state),map=states_map)
+ggChoropleth(data=crime, aes(fill=Murder,map_id=state),map=states_map,interactive = T)
+
+# 대한민국 지도
+# https://github.com/cardiomoon
+# https://github.com/cardiomoon/kormaps2014
+
+install.packages("devtools")#cran 이 아니라 다른 사이트로부터 설치할때 사용
+devtools::install_github("cardiomoon/kormaps")
+devtools::install_local("C:/Users/kjjs1/Downloads/kormaps2014-master.zip")
+
+library(kormaps2014)
+str(kormap1)
+
+str(changeCode(kormap1))
+str(changeCode(korpop1))
+str(changeCode(korpop2))
+str(changeCode(korpop3))
+
+korpop1 <- changeCode(korpop1)
+library(dplyr)
+
+korpop1 <- rename(korpop1, pop="총인구_명", name="행정구역별_읍면동")
+str(korpop1)
+
+ggChoropleth(data=korpop1, aes(fill=pop, map_id=code, tooltip=name), map=kormap1,
+             interactive=T)
+
+changeCode
+
+
+###워드 클라우드
+#---------------
+install.packages("Rcpp")
+install.packages("rlang")
+install.packages("rJava")
+install.packages("memoise")
+install.packages("konlp")
+install.packages("wordcloud")
+install.packages("RColorBrewer")
+install.packages("RMySQL")
+devtools::install_local("C:/Users/kjjs1/Downloads/KoNLP_0.80.2.tar.gz")
+
+library(KoNLP)
+library(dplyr)
+library(RColorBrewer)
+library(wordcloud)
+noun <- extractNoun(text)
+noun
+wordcount <- table(unlist(noun))
+wordcount
+df_word <- as.data.frame(wordcount,stringsAsFactors = F)
+df_word <- rename(df_word, word=Var1, freq=Freq)
+df_word <- filter(df_word,nchar(word)>=2)
+top30 <- df_word %>% arrange(desc(freq)) %>% head(30)
+top30
+pal2 <- brewer.pal(8, "Dark2") # 팔레트 생성
+wordcloud(words = df_word$word, #단어 데이터
+          freq = df_word$freq, #빈도수 데이터
+          min.freq = 2,  #최소 빈도수
+          max.freq = 200, #최대 빈도수
+          random.order = F, #빈도수 단어 중앙표시
+          rot.per = .1, #회전비율
+          scale = c(4,0.3), #단어 크기 최대 최소
+          colors=pal2 #색상
+          )
+##############################################################################################################
+#사전 설정
+useNIADic()
+
+#데이터 준비
+txt <- readLines("data/hiphop.txt")
+
+#특수문자 제거
+install.packages("strignr")
+library(stringr)
+#txt <- str_replace_all(txt,"\\w"," ")
+head(txt)
+
+#명사 추출
+nouns2 <- extractNoun(txt)
+class(nouns2)
+nouns2[1:10]
+
+wordcount2 <- table(unlist(nouns2))
+wordcount2[50:60]
+
+df_word2 <- as.data.frame(wordcount2, stringsAsFactors = F)
+tail(df_word2)
+
+# 컬럼명 수정
+df_word2 <- rename(df_word2,word=Var1, freq=Freq)
+
+# 두 글자 이상 단어 추철
+df_word2 <- filter(df_word2,nchar(word)>=2)
+tail(df_word2)
+
+#top20
+top20 <- df_word2 %>% arrange(desc(freq)) %>% head(20)
+top20
+
+#wordcloud로 출력
+set.seed(1234)
+
+wordcloud(words = df_word2$word, #단어 데이터
+          freq = df_word2$freq, #빈도수 데이터
+          min.freq = 5,  #최소 빈도수
+          max.words = 500, #최대 빈도수
+          random.order = F, #빈도수 단어 중앙표시
+          rot.per = .1, #회전비율
+          scale = c(2,0.1), #단어 크기 최대 최소
+          colors=pal2 #색상
+)

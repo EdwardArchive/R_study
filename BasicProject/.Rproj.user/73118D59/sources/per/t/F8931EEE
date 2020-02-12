@@ -1,0 +1,27 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580693914456.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1899877645",
+    "id" : "F8931EEE",
+    "lastKnownWriteTime" : 1580714373,
+    "last_content_update" : 1580714373067,
+    "path" : "C:/Users/kjjs1/ProjectFileKim/Rwork/BasicProject/welfare.Rmd",
+    "project_path" : "welfare.Rmd",
+    "properties" : {
+        "cursorPosition" : "293,0",
+        "last_setup_crc32" : "D2FD4837bb338d19",
+        "scrollLine" : "283",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

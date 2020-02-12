@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580782139398.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1549102977",
+    "id" : "F1E28B7F",
+    "lastKnownWriteTime" : 1580784759,
+    "last_content_update" : 1580784759367,
+    "path" : "C:/Users/kjjs1/ProjectFileKim/Rwork/StatProject/1_PowerAnalysis.R",
+    "project_path" : "1_PowerAnalysis.R",
+    "properties" : {
+        "cursorPosition" : "5,0",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

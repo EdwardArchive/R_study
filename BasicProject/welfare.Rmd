@@ -1,0 +1,326 @@
+---
+title: "urlframe"
+author: "kim"
+date: '2020 2 3 '
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## 1.데이터 준비
+
+https://www.koweps.re.kr:442/
+
+### 1-1 라이브러리 준비
+```{r}
+#install.packages("foreign")
+#install.packages("dplyr")
+#install.packages("ggplot2")
+#install.packages("readxl")
+
+library(foreign)
+library(dplyr)
+library(ggplot2)
+library(readxl)
+```
+### 1-2 데이터 불러오기
+```{r}
+raw_welfare= read.spss(file = "data/Koweps_hpc10_2015_beta1.sav",to.data.frame = T)
+head(raw_welfare)
+
+# 복사본
+welfare <- raw_welfare
+```
+### 1-3 데이터 검토
+```{r}
+head(welfare)
+tail(welfare)
+str(welfare)
+summary(welfare)
+View(welfare)
+```
+### 1-4 특성 선택
+```{r}
+welfare <- rename(welfare, sex=h10_g3, birth=h10_g4, marriage=h10_g10,
+                  religion=h10_g11, income=p1002_8aq1, code_job=h10_eco9,
+                  code_region=h10_reg7)
+welfare <- welfare[,c("sex","birth","marriage","religion","income","code_job","code_region")]
+
+head(welfare)
+```
+# 2. 형식적 데이터 분석
+
+### 2-1 성별에 따른 월급차이
+```{r}
+class(welfare)
+table(welfare$sex)
+```
+```{r}
+welfare$sex <- ifelse(welfare$sex == 1,"male","female")
+table(welfare$sex)
+
+qplot(welfare$sex)
+```
+```{r}
+# 월급 변수 검토
+class(welfare$income)
+summary(welfare$income)
+
+qplot(welfare$income)
+qplot(welfare$income) + xlim(0,1000)
+```
+```{r}
+#월급변수에 대한 전처리 ,결측치
+welfare$income <- ifelse(welfare$income %in% c(0,9999),NA,welfare$income)
+table(is.na(welfare$income))
+```
+```{r}
+#성별에 따른 평균 급여
+sex_income <-welfare %>% filter(!is.na(income)) %>% 
+  group_by(sex) %>% 
+  summarise(mean_income =mean(income))
+```
+
+
+```{r}
+ggplot(data=sex_income, aes(x=sex, y=mean_income)) +geom_col()
+```
+### 2-2 나이와 월급의 관계
+```{r}
+#나이 변수 검토
+class(welfare$birth)
+summary(welfare$birth)
+```
+```{r}
+qplot(welfare$birth)
+```
+```{r}
+#전처리 
+
+# 이상치 확인
+summary(welfare$birth)
+
+#결측치 확인
+table(is.na(welfare$birth))
+
+#파생 변수 작성 : age
+welfare$age <- 2015 - welfare$birth +1
+summary(welfare$age)
+
+qplot(welfare$age)
+```
+```{r}
+# 나이별 월급여 평균
+age_income <-welfare %>% filter(!is.na(income)) %>% 
+  group_by(age) %>% 
+  summarise(mean_income_age =mean(income))
+
+ggplot(data= age_income, aes(x=age,y=mean_income_age)) + geom_line()
+```
+```{r}
+#연령대로 범주화
+# 초년 (30대 미만),중년 (30~59),노년(60세 이상)
+welfare <- welfare %>%
+  mutate(ageg = ifelse(age<30, "young",ifelse(age<=59,"middle","old")))
+table(welfare$ageg)
+```
+```{r}
+qplot(welfare$ageg)
+```
+```{r}
+age_income <-welfare %>% filter(!is.na(income)) %>% 
+  group_by(ageg) %>% 
+  summarise(mean_income_age =mean(income))
+
+head(age_income)
+ggplot(data= age_income, aes(x=ageg,y=mean_income_age)) + geom_col() + scale_x_discrete(limits=c("young","middle","old"))
+```
+```{r}
+# 각 연령대별 성별 월급 차이 분석
+age_sex_income <- welfare %>%
+  filter(!is.na(income)) %>%
+  group_by(ageg,sex) %>%
+  summarise(mean_income =  mean(income))
+
+head(age_sex_income)
+```
+```{r}
+ggplot(data =  age_sex_income, aes(ageg, mean_income,fill=sex))+geom_col()+
+ scale_x_discrete(limits=c("young","middle","old"))
+```
+```{r}
+ggplot(data =  age_sex_income, aes(ageg, mean_income,fill=sex))+geom_col(position = "dodge")+
+ scale_x_discrete(limits=c("young","middle","old"))
+```
+```{r}
+# 나이대 별
+age_sex_income <- welfare %>%
+  filter(!is.na(income)) %>%
+  group_by(age,sex) %>%
+  summarise(mean_income =  mean(income))
+
+head(age_sex_income)
+
+ggplot(data =  age_sex_income, aes(age, mean_income,col=sex))+geom_line()
+```
+
+### 2-3 직업별 월급 차이
+
+```{r}
+# 직업 변수 검토
+class(welfare$code_job)
+table(welfare$code_job)
+```
+
+```{r}
+list_job <- read_excel("data/Koweps_Codebook.xlsx",sheet = 2, col_names = T)
+
+head(list_job)
+dim(list_job)
+```
+
+```{r}
+welfare <- left_join(welfare,list_job,id="code_job")
+head(welfare)
+
+welfare %>% filter(!is.na(code_job)) %>% select(code_job,job) %>% head(10)
+```
+
+```{r}
+# 직업별로 평균 급여 구하기
+top10 <-welfare %>% filter(!is.na(income) & !is.na(code_job)) %>% group_by(job) %>% 
+  summarise(job_income_mean = mean(income)) %>% arrange(desc(job_income_mean)) %>% head(10)
+
+bottom10 <-welfare %>% filter(!is.na(income) & !is.na(code_job)) %>% group_by(job) %>% 
+  summarise(job_income_mean = mean(income)) %>% arrange(job_income_mean) %>% head(10)
+bottom10
+```
+
+```{r}
+#그래프로 표시해보기
+ggplot(top10,aes(reorder(job,job_income_mean),job_income_mean)) + geom_col() + coord_flip()
+```
+```{r}
+ggplot(bottom10,aes(reorder(job,job_income_mean),job_income_mean)) + geom_col() + coord_flip() + ylim(0,850)
+```
+
+```{r}
+# 성별 직업 분포
+job_female <- welfare %>%
+  filter(!is.na(job) & sex=="female") %>%
+  group_by(job) %>%
+  summarise(n=n()) %>%
+  arrange(desc(n)) %>%
+  head(10)
+
+job_female
+```
+
+```{r}
+ggplot(job_female, aes(reorder(job,n),n)) + geom_col()+ coord_flip()
+```
+
+### 2-5 종교 유무에 따른 이혼율 
+
+```{r}
+# 종교 변수 검토
+class(welfare$religion)
+table(welfare$religion)
+
+# 종교 유무에 따른 1:yes 2:no
+welfare$religion <- ifelse(welfare$religion==1,"yes","no")
+table(welfare$religion)
+qplot(welfare$religion)
+```
+
+```{r}
+# 혼인변수 검토
+class(welfare$marriage)
+table(welfare$marriage)
+```
+
+```{r}
+# 이혼 여부에 따른 파생변수 추가(group_marriage : 1은 marriage, 3은 divorce, 나머지는 NA로 처리)
+
+welfare$group_marriage <- ifelse(welfare$marriage==1,"marriage",ifelse(welfare$marriage==3,"divorce",NA))
+
+table(welfare$group_marriage)
+
+qplot(welfare$group_marriage)
+```
+
+```{r}
+# 종교 유무에 따른 이혼율 표 만들기
+
+religion_marraige <- welfare %>%
+  filter(!is.na(group_marriage)) %>%
+  group_by(religion,group_marriage) %>%
+  summarise(n = n()) %>%
+  mutate(tot_group= sum(n)) %>%
+  mutate(pct = round(n/tot_group *100,1))
+
+religion_marraige
+```
+
+```{r}
+divorse <- religion_marraige %>% filter(group_marriage=="divorce") %>% select(religion, pct)
+
+divorse
+```
+
+```{r}
+#연령대 및 종교 유무에 따른 이혼을 분석
+
+# 연령대별로 이혼율을 작성
+ageg_marraige <- welfare %>%
+  filter(!is.na(group_marriage)) %>%
+  group_by(ageg,group_marriage) %>%
+  summarise(n = n()) %>%
+  mutate(tot_group= sum(n)) %>%
+  mutate(pct = round(n/tot_group *100,1))
+head(ageg_marraige)
+```
+
+```{r}
+#초년은 제외하고 노년과 중년에서의 이혼율표를 다시 작성
+ageg_divorce <- ageg_marraige %>% filter(ageg!="young" & group_marriage=="divorce") %>% select(ageg,pct)
+
+ageg_divorce
+```
+
+```{r}
+# 연령대 별 종교 유무에 따른 이혼률 표 만들기
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580434372643.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4131146407",
+    "id" : "FCF97B9A",
+    "lastKnownWriteTime" : 1580699944,
+    "last_content_update" : 1580699944044,
+    "path" : "C:/Users/kjjs1/ProjectFileKim/Rwork/BasicProject/5_Graph_R.R",
+    "project_path" : "5_Graph_R.R",
+    "properties" : {
+        "cursorPosition" : "77,0",
+        "scrollLine" : "63",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580784765394.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "22850546",
+    "id" : "9A223F67",
+    "lastKnownWriteTime" : 1580864008,
+    "last_content_update" : 1580864008203,
+    "path" : "C:/Users/kjjs1/ProjectFileKim/Rwork/StatProject/2_T-Test.R",
+    "project_path" : "2_T-Test.R",
+    "properties" : {
+        "cursorPosition" : "194,16",
+        "scrollLine" : "183",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

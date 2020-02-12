@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580796965640.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1531572214",
+    "id" : "45984A7A",
+    "lastKnownWriteTime" : 1580262070,
+    "last_content_update" : 1580262070,
+    "path" : "C:/Users/kjjs1/ProjectFileKim/Rwork/BasicProject/1_DataTypeR.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
